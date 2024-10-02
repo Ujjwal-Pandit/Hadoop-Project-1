@@ -1,15 +1,24 @@
 package org.ujjwal;
 
-import java.io.IOException;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class Mapper_2 extends Mapper<Object, Text, Text, Text> {
+import java.io.IOException;
+
+public class Mapper_2 extends Mapper<LongWritable, Text, Text, Text> {
+
     @Override
-    protected void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-        // Output from Reducer_1: single ID
-        String id = value.toString().trim();
-        // Emit ID with a placeholder value
-        context.write(new Text(id), new Text("")); // Placeholder value
+    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        String line = value.toString();
+        String[] ids = line.split(",");
+
+        if (ids.length == 5) {
+            String id1 = ids[2].trim();
+            String id2 = ids[1].trim();
+
+            // Emit WhatPage, ByWho
+            context.write(new Text(id1), new Text(id2));
+        }
     }
 }

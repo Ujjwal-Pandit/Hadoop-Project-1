@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Reducer_1 extends Reducer<Text, Text, Text, Text> {
+public class  Reducer_2 extends Reducer<Text, Text, Text, Text> {
 
     @Override
     protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
@@ -23,8 +23,6 @@ public class Reducer_1 extends Reducer<Text, Text, Text, Text> {
             // Emit Id1 -> Id2
             context.write(key, new Text(partner));
 
-            // Emit Id2 -> Id1 (for each unique partner)
-            context.write(new Text(partner), key);
         }
     }
 }
